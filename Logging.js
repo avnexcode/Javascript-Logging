@@ -1,44 +1,17 @@
 // Logging.js
 import { blue, blueBright, yellow, yellowBright, red, redBright, green, greenBright } from 'colorette'
 
-const LogLevel = {
-    INFO: 'INFO',
-    SUCCESS: 'SUCCESS',
-    WARN: 'WARN',
-    ERROR: 'ERROR'
-};
-
 class Logging {
-    formatMessage(level, args) {
-        const timestamp = new Date().toLocaleString();
-        const formattedArgs = typeof args === 'string' ? args : JSON.stringify(args, null, 2);
-        return `[${timestamp}] [${level}] ${formattedArgs}`;
-    }
 
-    logWithColor(color, brightColor, level, args) {
-        const message = this.formatMessage(level, args);
-        console.log(color(message));
-    }
+    log = (args) => this.info(args);
 
-    log(args) {
-        this.info(args);
-    }
+    info = (args) => console.log(blue(`[${new Date().toLocaleString()}] [INFO]`), typeof args === 'string' ? blueBright(args) : args);
 
-    info(args) {
-        this.logWithColor(blue, blueBright, LogLevel.INFO, args);
-    }
+    success = (args) => console.log(green(`[${new Date().toLocaleString()}] [SUCCESS]`), typeof args === 'string' ? greenBright(args) : args);
 
-    success(args) {
-        this.logWithColor(green, greenBright, LogLevel.SUCCESS, args);
-    }
+    warning = (args) => console.log( yellow(`[${new Date().toLocaleString()}] [WARN]`), typeof args === 'string' ? yellowBright(args) : args,);
 
-    warning(args) {
-        this.logWithColor(yellow, yellowBright, LogLevel.WARN, args);
-    }
-
-    error(args) {
-        this.logWithColor(red, redBright, LogLevel.ERROR, args);
-    }
+    error = (args) => console.log(red(`[${new Date().toLocaleString()}] [ERROR]`), typeof args === 'string' ? redBright(args) : args);
 }
 
 export default new Logging()
